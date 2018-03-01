@@ -1,0 +1,168 @@
+<html><head></head><body>
+
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+	<title>基于 Ubuntu + nextCloud 搭建自己的私人网盘 - 开发者实验室 - 腾讯云</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="icon" href="https://www.qcloud.com/favicon.ico" type="image/x-icon">
+	<style media="screen">
+		 /* 说明：为了方便用户可以直接下载查看，样式采用内嵌的方式书写 */
+		body {
+			margin: 0;
+			padding: 30px;
+			background-color: #fff;
+			font-size: 14px;
+			line-height: 1.5;
+			color: #444;
+		}
+		a {
+			color: #2277da;
+			text-decoration: none;
+			cursor: pointer;
+		}
+		a:hover {
+			text-decoration: underline;
+		}
+
+		/* 教程文档 start */
+		.lab-edi-doc {
+			margin: 0 auto;
+			max-width: 960px;
+			min-width: 320px;
+		}
+		.lab-edi-doc :first-child {
+			margin-top: 0;
+		}
+		.lab-edi-doc h1,
+		.lab-edi-doc h2,
+		.lab-edi-doc h3,
+		.lab-edi-doc h4 {
+			margin: 30px 0 15px;
+			font-weight: normal;
+			color: #000;
+		}
+		.lab-edi-doc h1 {
+			font-size: 24px;
+		}
+		.lab-edi-doc h2 {
+			font-size: 18px;
+		}
+		.lab-edi-doc h3 {
+			font-size: 16px;
+		}
+		.lab-edi-doc h4 {
+			font-size: 14px;
+			font-weight: bold;
+		}
+		.lab-edi-doc blockquote {
+			margin: 0 0 20px;
+			padding: 0 15px;
+			color: #888;
+			border-left: 4px solid #ddd;
+		}
+		.lab-edi-doc pre {
+			margin: 0 0 10px;
+			padding: 10px 15px;
+			overflow: auto;
+			background-color: #343638;
+			border-radius: 2px;
+			color: #fff;
+			max-height: 600px;
+			font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+		}
+		.lab-edi-doc code {
+			position: relative;
+			top: -1px;
+			display: inline-block;
+			margin: 0 3px;
+			padding: 0 3px;
+			color: #000;
+			vertical-align: middle;
+			background-color: #e3e4e5;
+			font-size: 14px;
+			line-height: 18px;
+		}
+		.lab-edi-doc pre code {
+			background: transparent;
+			color: #fff;
+		}
+		.lab-edi-doc p {
+			margin-bottom: 10px;
+		}
+		.lab-edi-doc ol,
+		.lab-edi-doc ul {
+			list-style: none;
+			margin: 0 0 15px;
+			padding: 0;
+		}
+		.lab-edi-doc ol {
+			counter-reset: num;
+		}
+		.lab-edi-doc ol > li {
+			margin-bottom: 3px;
+		}
+		.lab-edi-doc ol > li:before {
+			counter-increment: num;
+			content: counter(num)'. ';
+		}
+		.lab-edi-doc ul > li {
+			margin-bottom: 3px;
+		}
+		.lab-edi-doc ul > li:before {
+			content: '';
+			display: inline-block;
+			vertical-align: middle;
+			position: relative;
+			top: -1px;
+			margin-left: 3px;
+			margin-right: 5px;
+			width: 4px;
+			height: 4px;
+			border-radius: 50%;
+			background-color: #444;
+		}
+	</style>
+
+<div class="lab-edi-doc"><h1 id="-ubuntu-nextcloud-">基于 Ubuntu + nextCloud 搭建自己的私人网盘</h1>
+<h2 id="-">基础设置</h2>
+<blockquote>
+<p>任务时间：时间未知</p>
+</blockquote>
+<h3 id="-root-">切换为 root 账号</h3>
+<p>Ubutu 系统默认登录的用户为非 root 权限用户，为了能正常安装 nextCloud，需要切换为 root 账号。执行如下命令即可：</p>
+<pre><code>sudo su
+</code></pre><h3 id="-">更新及安装基础包</h3>
+<p>请依次运行如下命令，有遇到询问的<code>Is this ok [y/d/N]</code>的时候直接键入<code>y</code>并回车即可。</p>
+<pre><code>apt-get update
+apt-get install snap
+apt-get install snapd
+</code></pre><h2 id="-nextcloud">安装 nextCloud</h2>
+<blockquote>
+<p>任务时间：时间未知</p>
+</blockquote>
+<h3 id="-">进入安装</h3>
+<p>运行如下命令：</p>
+<pre><code>snap install nextcloud
+</code></pre><p>国内网络下载有点慢，需要耐心等待。笔者差不多1h 才安装好，建议可以睡个小觉再回来看进度。</p>
+<p>看到如下图则证明安装成功。</p>
+<p><img src="https://share-10039692.file.myqcloud.com/lab/a890e0d326/image/3nwbsft8t0/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-11-03%20%E4%B8%8A%E5%8D%881.03.35.png" alt="image"></p>
+<h2 id="-nextcloud">设置 nextCloud</h2>
+<blockquote>
+<p>任务时间：时间未知</p>
+</blockquote>
+<h3 id="-">创建用户</h3>
+<p>访问本机ip (http://&lt;您的 CVM IP 地址&gt;/) 即可进入 nextCloud 的安装页面。</p>
+<p>根据个人需求输入用户名创建用户即可。</p>
+<p><img src="https://share-10039692.file.myqcloud.com/lab/a890e0d326/image/zy50tldqop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-11-03%20%E4%B8%8A%E5%8D%881.08.25.png" alt="image"></p>
+<h3 id="-">管理</h3>
+<p>创建成功即进入管理界面，与一般的网盘使用上无多大差别，也可以按照提示下载使用移动端 app 管理文件。</p>
+<p><img src="https://share-10039692.file.myqcloud.com/lab/a890e0d326/image/ekznc52az1/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-11-03%20%E4%B8%8A%E5%8D%881.09.47.png" alt="image"></p>
+<p><img src="https://share-10039692.file.myqcloud.com/lab/a890e0d326/image/dp0ec39cnr/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-11-03%20%E4%B8%8A%E5%8D%881.11.56.png" alt="image"></p>
+<p><img src="https://share-10039692.file.myqcloud.com/lab/a890e0d326/image/5pelfuv82b/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202017-11-03%20%E4%B8%8A%E5%8D%881.12.03.png" alt="image"></p>
+<p>恭喜，已经完成教程！</p>
+</div>
+</body></html>
